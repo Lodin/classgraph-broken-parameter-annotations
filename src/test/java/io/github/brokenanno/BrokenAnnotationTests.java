@@ -21,13 +21,15 @@ import io.github.classgraph.MethodParameterInfo;
 public class BrokenAnnotationTests {
     @Test
     public void test() throws URISyntaxException {
-        var targetDir = Paths.get(Objects.requireNonNull(
-                getClass().getProtectionDomain().getCodeSource().getLocation())
-                .toURI());
+        var targetDir = Paths
+                .get(Objects
+                        .requireNonNull(
+                                BrokenAnnotation.class.getProtectionDomain()
+                                        .getCodeSource().getLocation())
+                        .toURI());
 
         try (var result = new ClassGraph().enableAllInfo()
-                .enableSystemJarsAndModules()
-                .overrideClasspath(List.of(targetDir)).scan()) {
+                .overrideClasspath(List.of(targetDir)).verbose().scan()) {
             var actual = Arrays
                     .stream(result
                             .getClassInfo(
